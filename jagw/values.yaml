@@ -56,10 +56,10 @@ redis-cluster:
     image: redis
     tag: 6.0-alpine
     port: 5000
-    storage: 50Mi
+    storage: 5Gi
   redis:
     name: redis
     image: redislabs/rejson
     tag: latest
     port: 6379
-    storage: 50Mi
+    storage: 5Gi
