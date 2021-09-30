@@ -1,0 +1,74 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ .Values.redis.name }}
+  annotations:
+    "helm.sh/hook-weight": "0"
+spec:
+  serviceName: {{ .Values.redis.name }}
+  replicas: 3
+  selector:
+    matchLabels:
+      app: {{ .Values.redis.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.redis.name }}
+    spec:
+      initContainers:
+      - name: config
+        image: {{ .Values.sentinel.image }}:{{ .Values.sentinel.tag }}
+        command: [ "sh", "-c" ]
+        args:
+          - |
+            cp /tmp/redis/redis.conf /etc/redis/redis.conf
+            
+            echo "finding master..."
+            MASTER_FDQN=`hostname  -f | sed -e 's/redis-[0-9]\./redis-0./'`
+            if [ "$(redis-cli -h sentinel -p {{ .Values.sentinel.port }} ping)" != "PONG" ]; then
+              echo "master not found, defaulting to redis-0"
+
+              if [ "$(hostname)" == "redis-0" ]; then
+                echo "this is redis-0, not updating config..."
+              else
+                echo "updating redis.conf..."
+                echo "slaveof $MASTER_FDQN {{ .Values.redis.port }}" >> /etc/redis/redis.conf
+              fi
+            else
+              echo "sentinel found, finding master"
+              MASTER="$(redis-cli -h sentinel -p {{ .Values.sentinel.port }} sentinel get-master-addr-by-name mymaster | grep -E '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}')"
+              echo "master found : $MASTER, updating redis.conf"
+              echo "slaveof $MASTER {{ .Values.redis.port }}" >> /etc/redis/redis.conf
+            fi
+        volumeMounts:
+        - name: {{ .Values.redis.name }}-config
+          mountPath: /etc/redis/
+        - name: config
+          mountPath: /tmp/redis/
+      containers:
+      - name: redis
+        image: {{ .Values.redis.image }}:{{ .Values.redis.tag }}
+        command: ["redis-server"]
+        args: ["/etc/redis/redis.conf"]
+        ports:
+        - containerPort: {{ .Values.redis.port}}
+          name: redis
+        volumeMounts:
+        - name: data
+          mountPath: /data
+        - name: {{ .Values.redis.name }}-config
+          mountPath: /etc/redis/
+      volumes:
+      - name: {{ .Values.redis.name }}-config
+        emptyDir: {}
+      - name: config
+        configMap:
+          name: {{ .Values.redis.name }}-config
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: {{ .Values.redis.storage }}

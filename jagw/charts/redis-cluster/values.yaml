@@ -1,0 +1,15 @@
+password: a-very-complex-password-here
+
+sentinel:
+  name: sentinel
+  image: redis
+  tag: 6.0-alpine
+  port: 5000
+  storage: 50Mi
+
+redis:
+  name: redis
+  image: redislabs/rejson
+  tag: latest
+  port: 6379
+  storage: 50Mi
