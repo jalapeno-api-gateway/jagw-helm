@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "{{ .Values.subscriptionService.name }}-config"
+data:
+    ARANGO_DB: {{ .Values.config.arangoDB }}
+    ARANGO_DB_USER: {{ .Values.config.arangoDBUser }}
+    ARANGO_DB_PASSWORD: {{ .Values.config.arangoDBPassword }}
+    ARANGO_DB_NAME: {{ .Values.config.arangoDBName }}
+    APP_SERVER_ADDRESS: {{ .Values.subscriptionService.config.appServerAddress }}:{{ .Values.subscriptionService.config.appServerPort }}
+    KAFKA_ADDRESS: {{ .Values.config.kafkaAddress }}

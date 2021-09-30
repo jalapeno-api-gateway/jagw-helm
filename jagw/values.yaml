@@ -1,0 +1,50 @@
+imagePullSecrets: []
+
+subscriptionService:
+  name: push-service
+  replicas: 1
+  image:
+    repository:
+    pullPolicy:
+    tag:
+  resources: []
+  nodePort:
+  config:
+    appServerAddress:
+    appServerPort:
+
+cacheService:
+  name: cache-service
+  replicas: 1
+  image:
+    repository:
+    pullPolicy:
+    tag:
+  resources: []
+
+requestService:
+  name: request-service
+  replicas: 1
+  image:
+    repository:
+    pullPolicy:
+    tag:
+  resources: []
+  nodePort:
+  config:
+    appServerAddress:
+    appServerPort:
+
+config:
+  arangoDB: http://10.20.1.24:30852
+  arangoDBUser: root
+  arangoDBPassword: jalapeno
+  arangoDBName: jalapeno
+  redisPassword: a-very-complex-password-here
+  sentinelAddress: sentinel.namesapce.svc.cluster.local:5000
+  sentinelMaster: mymaster
+  kafkaAddress: 10.20.1.24:30092
+  influxDBUrl:
+  influxDBUser:
+  influxDBPassword:
+  influxDB:

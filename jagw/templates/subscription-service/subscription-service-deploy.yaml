@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "{{ .Values.subscriptionService.name }}"
+spec:
+  replicas: {{ .Values.subscriptionService.replicas }}
+  selector:
+    matchLabels:
+      app: "{{ .Values.subscriptionService.name }}"
+  template:
+    metadata:
+      labels:
+        app: "{{ .Values.subscriptionService.name }}"
+    spec:
+      containers:
+        - image: "{{ .Values.subscriptionService.image.repository }}:{{ .Values.subscriptionService.image.tag }}"
+          ports:
+          - containerPort: {{ .Values.subscriptionService.config.appServerPort }}
+            protocol: TCP
+          envFrom:
+            - configMapRef:
+                name: {{ .Values.subscriptionService.name }}-config
+          {{- if .Values.imagePullSecrets }}
+          imagePullPolicy: "{{ .Values.imagePullSecrets }}"
+          {{- end }}
+          imagePullPolicy: "{{ .Values.subscriptionService.image.pullPolicy }}"
+          name: "{{ .Values.subscriptionService.name }}"
+          {{- if .Values.subscriptionService.resources }}
+          resources:
+            {{- if .Values.subscriptionService.resources.requests }}
+            requests:
+              memory: {{ .Values.subscriptionService.resources.requests.memory | default "50Mi" | quote }}
+              cpu: {{ .Values.subscriptionService.resources.requests.cpu | default "10m" | quote }}
+            {{- else}}
+            requests:
+              memory: "50Mi"
+              cpu: "10m"
+            {{- end}}
+            {{- if .Values.subscriptionService.resources.limits }}
+            limits:
+              memory: {{ .Values.subscriptionService.resources.limits.memory | default "1024Mi" | quote }}
+              cpu: {{ .Values.subscriptionService.resources.limits.cpu | default "1" | quote }}
+            {{- else}}
+            limits:
+              memory: "1024Mi"
+              cpu: "1"
+            {{- end }}
+          {{- else }}
+          resources:
+            requests:
+              memory: "50Mi"
+              cpu: "10m"
+            limits:
+              memory: "1024Mi"
+              cpu: "1"
+          {{- end }}

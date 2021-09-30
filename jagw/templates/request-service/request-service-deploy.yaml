@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "{{ .Values.requestService.name }}"
+spec:
+  replicas: {{ .Values.requestService.replicas }}
+  selector:
+    matchLabels:
+      app: "{{ .Values.requestService.name }}"
+  template:
+    metadata:
+      labels:
+        app: "{{ .Values.requestService.name }}"
+    spec:
+      containers:
+        - image: "{{ .Values.requestService.image.repository }}:{{ .Values.requestService.image.tag }}"
+          ports:
+          - containerPort: {{ .Values.requestService.config.appServerPort }}
+            protocol: TCP
+          envFrom:
+            - configMapRef:
+                name: {{ .Values.requestService.name }}-config
+          {{- if .Values.imagePullSecrets }}
+          imagePullPolicy: "{{ .Values.imagePullSecrets }}"
+          {{- end }}
+          name: "{{ .Values.requestService.name }}"
+          {{- if .Values.requestService.resources }}
+          resources:
+            {{- if .Values.requestService.resources.requests }}
+            requests:
+              memory: {{ .Values.requestService.resources.requests.memory | default "50Mi" | quote }}
+              cpu: {{ .Values.requestService.resources.requests.cpu | default "10m" | quote }}
+            {{- else}}
+            requests:
+              memory: "50Mi"
+              cpu: "10m"
+            {{- end}}
+            {{- if .Values.requestService.resources.limits }}
+            limits:
+              memory: {{ .Values.requestService.resources.limits.memory | default "1024Mi" | quote }}
+              cpu: {{ .Values.requestService.resources.limits.cpu | default "1" | quote }}
+            {{- else}}
+            limits:
+              memory: "1024Mi"
+              cpu: "1"
+            {{- end }}
+          {{- else }}
+          resources:
+            requests:
+              memory: "50Mi"
+              cpu: "10m"
+            limits:
+              memory: "1024Mi"
+              cpu: "1"
+          {{- end }}
