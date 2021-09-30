@@ -4,10 +4,7 @@ metadata:
   name: "{{ .Values.cacheService.name }}-config"
 data:
     ARANGO_DB: {{ .Values.config.arangoDB }}
-    ARANGO_DB_USER: {{ .Values.config.arangoDBUser }}
-    ARANGO_DB_PASSWORD: {{ .Values.config.arangoDBPassword }}
     ARANGO_DB_NAME: {{ .Values.config.arangoDBName }}
-    REDIS_PASSWORD: {{ .Values.config.redisPassword }}
     SENTINEL_ADDRESS: {{ .Values.config.sentinelAddress }} 
     SENTINEL_MASTER: {{ .Values.config.sentinelMaster }}
     KAFKA_ADDRESS: {{ .Values.config.kafkaAddress }}

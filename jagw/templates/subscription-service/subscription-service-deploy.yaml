@@ -20,6 +20,8 @@ spec:
           envFrom:
             - configMapRef:
                 name: {{ .Values.subscriptionService.name }}-config
+            - secretRef:
+                name: {{ .Values.subscriptionService.name }}-secret
           {{- if .Values.imagePullSecrets }}
           imagePullPolicy: "{{ .Values.imagePullSecrets }}"
           {{- end }}

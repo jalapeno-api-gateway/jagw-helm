@@ -17,6 +17,8 @@ spec:
           envFrom:
             - configMapRef:
                 name: {{ .Values.cacheService.name }}-config
+            - secretRef:
+                name: {{ .Values.cacheService.name }}-secret
           {{- if .Values.imagePullSecrets }}
           imagePullPolicy: "{{ .Values.imagePullSecrets }}"
           {{- end }}
