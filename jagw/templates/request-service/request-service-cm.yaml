@@ -6,5 +6,5 @@ data:
     SENTINEL_ADDRESS: {{ .Values.config.sentinelAddress }} 
     SENTINEL_MASTER: {{ .Values.config.sentinelMaster }}
     APP_SERVER_ADDRESS: {{ .Values.requestService.config.appServerAddress }}:{{ .Values.requestService.config.appServerPort }}
-    INFLUX_DB_URL: {{ .Values.config.influxDBUrl }}
+    INFLUX_ADDRESS: {{ .Values.config.influxDBUrl }}
     INFLUX_DB: {{ .Values.config.influxDB }}

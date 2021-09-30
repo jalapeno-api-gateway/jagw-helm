@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   name: "{{ .Values.subscriptionService.name }}-config"
 data:
-    ARANGO_DB: {{ .Values.config.arangoDB }}
+    ARANGO_ADDRESS: {{ .Values.config.arangoDB }}
     ARANGO_DB_NAME: {{ .Values.config.arangoDBName }}
     APP_SERVER_ADDRESS: {{ .Values.subscriptionService.config.appServerAddress }}:{{ .Values.subscriptionService.config.appServerPort }}
     KAFKA_ADDRESS: {{ .Values.config.kafkaAddress }}
