@@ -8,7 +8,7 @@ spec:
   accessModes:
        - ReadWriteOnce
   hostPath:
-       path: /var/lib/redis
+       path: /var/lib/sentinel
   persistentVolumeReclaimPolicy: Retain
 ---
 apiVersion: apps/v1
