@@ -1,52 +1,52 @@
 imagePullSecrets: []
 config:
-  arangoDB: http://10.20.1.24:30852
+  arangoDB: http://arango.jalapeno.svc.cluster.local:8529
   arangoDBUser: root
   arangoDBPassword: jalapeno
   arangoDBName: jalapeno
   redisPassword: a-very-complex-password-here
-  sentinelAddress: sentinel.namesapce.svc.cluster.local:5000
+  sentinelAddress: sentinel.jagw.svc.cluster.local:5000
   sentinelMaster: mymaster
-  kafkaAddress: 10.20.1.24:30092
-  influxDBUrl:
-  influxDBUser:
-  influxDBPassword:
-  influxDB:
+  kafkaAddress: kafka.jalapeno.svc.cluster.local:9092
+  influxDBUrl: http://influxdb.jalapeno.svc.cluster.local:8086
+  influxDBUser: root
+  influxDBPassword: jalapeno
+  influxDB: mdt_db
 
 subscriptionService:
   name: push-service
   replicas: 1
   image:
-    repository:
-    pullPolicy:
-    tag:
+    repository: insost/jagw-subscription-service
+    pullPolicy: Always
+    tag: v1.0.0-beta
   resources: []
-  nodePort:
+  nodePort: 30060
   config:
-    appServerAddress:
-    appServerPort:
+    appServerAddress: 0.0.0.0
+    appServerPort: 9000
 
 cacheService:
   name: cache-service
   replicas: 1
   image:
-    repository:
-    pullPolicy:
-    tag:
+    repository: insost/jagw-cache-service
+    pullPolicy: Always
+    tag: v1.0.0-beta
   resources: []
 
 requestService:
   name: request-service
   replicas: 1
   image:
-    repository:
-    pullPolicy:
-    tag:
+    repository: insost/jagw-request-service
+    pullPolicy: Always
+    tag: v1.0.0-beta
   resources: []
-  nodePort:
+  nodePort: 30061
   config:
-    appServerAddress:
-    appServerPort:
+    appServerAddress: 0.0.0.0
+    appServerPort: 9000
 
 redis-cluster:
   password: a-very-complex-password-here
