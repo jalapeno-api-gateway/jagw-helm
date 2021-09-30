@@ -1,6 +1,6 @@
 imagePullSecrets: []
 config:
-  arangoDB: arango.jalapeno.svc.cluster.local:8529
+  arangoDB: arangodb.jalapeno.svc.cluster.local:8529
   arangoDBUser: root
   arangoDBPassword: jalapeno
   arangoDBName: jalapeno
@@ -14,7 +14,7 @@ config:
   influxDB: mdt_db
 
 subscriptionService:
-  name: push-service
+  name: subscription-service
   replicas: 1
   image:
     repository: insost/jagw-subscription-service
