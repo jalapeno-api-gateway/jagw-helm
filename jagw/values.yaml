@@ -1,0 +1,65 @@
+imagePullSecrets: []
+config:
+  arangoDB: arangodb.jalapeno.svc.cluster.local:8529
+  arangoDBUser: root
+  arangoDBPassword: jalapeno
+  arangoDBName: jalapeno
+  redisPassword: a-very-complex-password-here
+  sentinelAddress: sentinel.jagw.svc.cluster.local:5000
+  sentinelMaster: mymaster
+  kafkaAddress: broker.jalapeno.svc.cluster.local:9092
+  influxDBUrl: influxdb.jalapeno.svc.cluster.local:8086
+  influxDBUser: root
+  influxDBPassword: jalapeno
+  influxDB: mdt_db
+
+subscriptionService:
+  name: subscription-service
+  replicas: 1
+  image:
+    repository: insost/jagw-subscription-service
+    pullPolicy: Always
+    tag: v1.0.0-beta
+  resources: []
+  nodePort: 30060
+  config:
+    appServerAddress: 0.0.0.0
+    appServerPort: 9000
+
+cacheService:
+  name: cache-service
+  replicas: 1
+  image:
+    repository: insost/jagw-cache-service
+    pullPolicy: Always
+    tag: v1.0.0-beta
+  resources: []
+
+requestService:
+  name: request-service
+  replicas: 1
+  image:
+    repository: insost/jagw-request-service
+    pullPolicy: Always
+    tag: v1.0.0-beta
+  resources: []
+  nodePort: 30061
+  config:
+    appServerAddress: 0.0.0.0
+    appServerPort: 9000
+
+redis-cluster:
+  password: a-very-complex-password-here
+  mastername: mymaster
+  sentinel:
+    name: sentinel
+    image: redis
+    tag: 6.0-alpine
+    port: 5000
+    storage: 5Gi
+  redis:
+    name: redis
+    image: redislabs/rejson
+    tag: latest
+    port: 6379
+    storage: 5Gi
