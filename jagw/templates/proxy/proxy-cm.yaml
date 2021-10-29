@@ -90,7 +90,7 @@ data:
                       address:
                         socket_address:
                           address: {{ .Values.subscriptionService.name }}.{{ .Release.Namespace }}.svc.cluster.local
-                          port_value: {{ .Values.subscriptionService.config.appServerPort }}
+                          port_value: 8080
         - name: request_service
           connect_timeout: 0.25s
           type: logical_dns
@@ -104,4 +104,4 @@ data:
                       address:
                         socket_address:
                           address: {{ .Values.requestService.name }}.{{ .Release.Namespace }}.svc.cluster.local
-                          port_value: {{ .Values.requestService.config.appServerPort }}
+                          port_value: 8080 
