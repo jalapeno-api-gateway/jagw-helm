@@ -1,0 +1,61 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "{{ .Values.proxy.name }}"
+spec:
+  replicas: {{ .Values.proxy.replicas }}
+  selector:
+    matchLabels:
+      app: "{{ .Values.proxy.name }}"
+  template:
+    metadata:
+      labels:
+        app: "{{ .Values.proxy.name }}"
+    spec:
+      volumes:
+        - name: config
+          configMap:
+            name: {{ .Values.proxy.name }}-config
+      containers:
+        - image: "{{ .Values.proxy.image.repository }}:{{ .Values.proxy.image.tag }}"
+          volumeMounts:
+          - name: config
+            mountPath: "/etc/envoy/"
+            readOnly: true
+          ports:
+          - containerPort: {{ .Values.proxy.config.appServerPort }}
+            protocol: TCP
+          {{- if .Values.imagePullSecrets }}
+          imagePullPolicy: "{{ .Values.imagePullSecrets }}"
+          {{- end }}
+          name: "{{ .Values.proxy.name }}"
+          {{- if .Values.proxy.resources }}
+          resources:
+            {{- if .Values.proxy.resources.requests }}
+            requests:
+              memory: {{ .Values.proxy.resources.requests.memory | default "50Mi" | quote }}
+              cpu: {{ .Values.proxy.resources.requests.cpu | default "10m" | quote }}
+            {{- else}}
+            requests:
+              memory: "50Mi"
+              cpu: "10m"
+            {{- end}}
+            {{- if .Values.proxy.resources.limits }}
+            limits:
+              memory: {{ .Values.proxy.resources.limits.memory | default "1024Mi" | quote }}
+              cpu: {{ .Values.proxy.resources.limits.cpu | default "1" | quote }}
+            {{- else}}
+            limits:
+              memory: "1024Mi"
+              cpu: "1"
+            {{- end }}
+          {{- else }}
+          resources:
+            requests:
+              memory: "50Mi"
+              cpu: "10m"
+            limits:
+              memory: "1024Mi"
+              cpu: "1"
+          {{- end }}
