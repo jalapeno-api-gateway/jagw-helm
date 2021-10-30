@@ -63,3 +63,19 @@ redis-cluster:
     tag: latest
     port: 6379
     storage: 5Gi
+
+proxy:
+  name: envoy-proxy
+  replicas: 1
+  image:
+    repository: envoyproxy/envoy-dev
+    pullPolicy: Always
+    tag: latest
+  resources: []
+  config:
+    appServerAddress: 0.0.0.0
+    appServerPort: 9901
+    internalSubscriptionServicePort: 9902
+    externalSubscriptionServicePort: 30051
+    internalRequestServicePort: 9903
+    externalRequestServicePort: 30050

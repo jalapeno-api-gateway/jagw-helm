@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: {{ .Values.proxy.name }}
+  name: {{ .Values.proxy.name }}
+spec:
+  ports:
+  - name: {{ .Values.subscriptionService.name }}
+    port: {{ .Values.proxy.config.internalSubscriptionServicePort }}
+    protocol: TCP
+    targetPort: {{ .Values.proxy.config.internalSubscriptionServicePort }}
+    nodePort: {{ .Values.proxy.config.externalSubscriptionServicePort }} 
+  - name: {{ .Values.requestService.name }}
+    port: {{ .Values.proxy.config.internalRequestServicePort }}
+    protocol: TCP
+    targetPort: {{ .Values.proxy.config.internalRequestServicePort }}
+    nodePort: {{ .Values.proxy.config.externalRequestServicePort }} 
+  selector:
+    app: {{ .Values.proxy.name }}
+  type: NodePort
