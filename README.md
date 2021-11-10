@@ -12,6 +12,11 @@ $ helm install <release-name> jagw --namespace <namespace>
 ```bash
 $ helm upgrade <release-name> jagw --namespace <namespace>
 ```
+**Uninstall the chart with the following command:**
+
+```bash
+$ helm uninstall <release-name> --namespace <namespace>
+```
 
 Once deployed, the services can be directly accessed through these ports:
 
