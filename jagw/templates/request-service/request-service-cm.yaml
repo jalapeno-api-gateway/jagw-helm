@@ -8,3 +8,4 @@ data:
     APP_SERVER_ADDRESS: {{ .Values.requestService.config.appServerAddress }}:{{ .Values.requestService.config.appServerPort }}
     INFLUX_ADDRESS: {{ .Values.config.influxDBUrl }}
     INFLUX_DB: {{ .Values.config.influxDB }}
+    LOG_LEVEL: {{ .Values.requestService.logLevel }}

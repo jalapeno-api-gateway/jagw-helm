@@ -8,3 +8,4 @@ data:
     SENTINEL_ADDRESS: {{ .Values.config.sentinelAddress }} 
     SENTINEL_MASTER: {{ .Values.config.sentinelMaster }}
     KAFKA_ADDRESS: {{ .Values.config.kafkaAddress }}
+    LOG_LEVEL: {{ .Values.cacheService.logLevel }}

@@ -7,3 +7,4 @@ data:
     ARANGO_DB_NAME: {{ .Values.config.arangoDBName }}
     APP_SERVER_ADDRESS: {{ .Values.subscriptionService.config.appServerAddress }}:{{ .Values.subscriptionService.config.appServerPort }}
     KAFKA_ADDRESS: {{ .Values.config.kafkaAddress }}
+    LOG_LEVEL: {{ .Values.subscriptionService.logLevel }}
