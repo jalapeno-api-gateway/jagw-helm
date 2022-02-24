@@ -18,14 +18,7 @@ $ helm upgrade <release-name> jagw --namespace <namespace>
 $ helm uninstall <release-name> --namespace <namespace>
 ```
 
-Once deployed, the services can be directly accessed through these ports:
-
-Service | Port
---- | ---
-Request-Service | 30061
-Subscription-Service | 30060
-
-There is also an Envoy proxy deployed. The services can be accessed through the Envoy proxy with the following ports:
+Once deployed, the services can be accessed through the Envoy proxy on these ports:
 
 Service | Port
 --- | ---
