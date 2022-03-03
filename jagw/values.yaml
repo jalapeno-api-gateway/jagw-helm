@@ -19,7 +19,7 @@ subscriptionService:
   image:
     repository: insost/jagw-subscription-service
     pullPolicy: Always
-    tag: v1.3.1
+    tag: v1.3.2
   resources: []
   nodePort: 30060
   config:
@@ -33,7 +33,7 @@ cacheService:
   image:
     repository: insost/jagw-cache-service
     pullPolicy: Always
-    tag: v1.3.1
+    tag: v1.3.2
   resources: []
   logLevel: trace
 
@@ -43,7 +43,7 @@ requestService:
   image:
     repository: insost/jagw-request-service
     pullPolicy: Always
-    tag: v1.3.1
+    tag: v1.3.2
   resources: []
   nodePort: 30061
   config:
