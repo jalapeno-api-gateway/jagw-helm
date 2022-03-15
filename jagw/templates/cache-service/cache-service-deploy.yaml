@@ -13,7 +13,7 @@ spec:
         app: "{{ .Values.cacheService.name }}"
     spec:
       containers:
-        - image: "{{ .Values.cacheService.image.repository }}:{{ .Values.cacheService.image.tag }}"
+        - image: "{{ .Values.cacheService.image.repository }}:{{ .Values.release.cacheServiceTag }}"
           envFrom:
             - configMapRef:
                 name: {{ .Values.cacheService.name }}-config
