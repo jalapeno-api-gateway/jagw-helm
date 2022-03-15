@@ -1,4 +1,10 @@
 imagePullSecrets: []
+
+release:
+  cacheServiceTag: v1.3.3
+  requestServiceTag: v1.3.3
+  subscriptionServiceTag: v1.3.3
+
 config:
   arangoDB: arangodb.jalapeno.svc.cluster.local:8529
   arangoDBUser: root
@@ -19,7 +25,6 @@ subscriptionService:
   image:
     repository: insost/jagw-subscription-service
     pullPolicy: Always
-    tag: v1.3.2
   resources: []
   nodePort: 30060
   config:
@@ -33,7 +38,6 @@ cacheService:
   image:
     repository: insost/jagw-cache-service
     pullPolicy: Always
-    tag: v1.3.2
   resources: []
   logLevel: trace
 
@@ -43,7 +47,6 @@ requestService:
   image:
     repository: insost/jagw-request-service
     pullPolicy: Always
-    tag: v1.3.2
   resources: []
   nodePort: 30061
   config:
