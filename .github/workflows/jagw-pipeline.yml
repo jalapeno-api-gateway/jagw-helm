@@ -10,23 +10,26 @@ on:
         description: "Build branch (dev | main)"
         required: true
         type: string
-      type:
+      release_or_dev:
         description: "Type (dev | release)"
         required: true
         type: string
+      protorepo_jagw_go_ref:
+        description: "Ref used by other go modules to import this version"
+        type: string
+        required: true
+      jagw_core_ref:
+        description: "Ref used by other go modules to import this version"
+        type: string
+        required: true
 
 jobs:
   call-update-dependencies:
     uses: jalapeno-api-gateway/jagw/.github/workflows/update-dependencies.yml@dev
-    with:
-      tag_name: ${{ github.event.inputs.tag_name }}
   call-merge-to-main:
     needs: call-update-dependencies
-    if: github.event.inputs.type == 'release'
+    if: github.event.inputs.release_or_dev == 'release'
     uses: jalapeno-api-gateway/jagw/.github/workflows/merge-to-main.yml@dev
-    with:
-      source_branch: dev
-      destination_branch: main
   call-create-tag:
     needs: [call-merge-to-main]
     uses: jalapeno-api-gateway/jagw/.github/workflows/create-tag.yml@dev
@@ -34,10 +37,6 @@ jobs:
       always() &&
       (needs.call-merge-to-main.result == 'success' || needs.call-merge-to-main.result == 'skipped') &&
       needs.call-update-dependencies.result == 'success'
-    with:
-      tag_name: ${{ github.event.inputs.tag_name }}
   call-create-release:
     needs: [call-merge-to-main, call-create-tag]
     uses: jalapeno-api-gateway/jagw/.github/workflows/create-release.yml@dev
-    with:
-      tag_name: ${{ github.event.inputs.tag_name }}

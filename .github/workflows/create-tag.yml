@@ -1,12 +1,6 @@
 name: Create Tag
 
-on: 
-  workflow_call:
-    inputs:
-      tag_name:
-        description: 'Name of the tag to create'
-        type: string
-        required: true
+on: workflow_call
  
 jobs:
   create-tag:
@@ -28,4 +22,4 @@ jobs:
               sha: context.sha
             })
         env:
-          TAG_NAME: "${{ inputs.tag_name }}"
+          TAG_NAME: "${{ github.event.inputs.tag_name }}"

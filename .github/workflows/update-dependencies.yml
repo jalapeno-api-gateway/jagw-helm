@@ -1,11 +1,6 @@
 name: Create Release
 
-on:
-  workflow_call:
-    inputs:
-      tag_name:
-        type: string
-        required: true
+on: workflow_call
 
 jobs:
   create-release:
@@ -18,9 +13,9 @@ jobs:
       - name: Update dependencies
         run: |
           cd jagw
-          sed -i 's/cacheServiceTag:.*$/cacheServiceTag: ${{ inputs.tag_name }}/' values.yaml
-          sed -i 's/requestServiceTag:.*$/requestServiceTag: ${{ inputs.tag_name }}/' values.yaml
-          sed -i 's/subscriptionServiceTag:.*$/subscriptionServiceTag: ${{ inputs.tag_name }}/' values.yaml
+          sed -i 's/cacheServiceTag:.*$/cacheServiceTag: ${{ github.event.inputs.tag_name }}/' values.yaml
+          sed -i 's/requestServiceTag:.*$/requestServiceTag: ${{ github.event.inputs.tag_name }}/' values.yaml
+          sed -i 's/subscriptionServiceTag:.*$/subscriptionServiceTag: ${{ github.event.inputs.tag_name }}/' values.yaml
       - name: Create PR for local changes
         id: cpr
         uses: peter-evans/create-pull-request@v3
