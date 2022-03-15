@@ -13,7 +13,7 @@ spec:
         app: "{{ .Values.requestService.name }}"
     spec:
       containers:
-        - image: "{{ .Values.requestService.image.repository }}:{{ .Values.requestService.image.tag }}"
+        - image: "{{ .Values.requestService.image.repository }}:{{ .Values.release.requestServiceTag }}"
           ports:
           - containerPort: {{ .Values.requestService.config.appServerPort }}
             protocol: TCP
