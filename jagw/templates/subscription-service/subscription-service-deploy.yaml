@@ -13,7 +13,7 @@ spec:
         app: "{{ .Values.subscriptionService.name }}"
     spec:
       containers:
-        - image: "{{ .Values.subscriptionService.image.repository }}:{{ .Values.subscriptionService.image.tag }}"
+        - image: "{{ .Values.subscriptionService.image.repository }}:{{ .Values.release.subscriptionServiceTag }}"
           ports:
           - containerPort: {{ .Values.subscriptionService.config.appServerPort }}
             protocol: TCP
