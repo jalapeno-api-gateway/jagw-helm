@@ -1,5 +1,7 @@
 # Jalapeño API Gateway - Deployment
-Helm Chart for the Jalapeño API Gateway
+A Helm Chart for the Jalapeño API Gateway.
+
+To use it, update the parameters in the file `jagw/values.yaml` for your own setup.
 
 ## Usage
 
