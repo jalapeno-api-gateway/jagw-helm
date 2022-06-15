@@ -76,7 +76,7 @@ proxy:
   image:
     repository: envoyproxy/envoy-dev
     pullPolicy: Always
-    tag: latest
+    tag: f9d936ec65e42308f72b48e52ed5b810effc40e5
   resources: []
   config:
     appServerAddress: 0.0.0.0
