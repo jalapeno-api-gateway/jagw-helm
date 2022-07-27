@@ -6,14 +6,14 @@ release:
   subscriptionServiceTag: dev-30
 
 config:
-  arangoDB: arangodb.jalapeno.svc.cluster.local:8529
+  arangoDB: jalapeno-arangodb.jalapeno.svc.cluster.local:8529
   arangoDBUser: root
   arangoDBPassword: jalapeno
   arangoDBName: jalapeno
   redisPassword: a-very-complex-password-here
-  sentinelAddress: sentinel.jagw.svc.cluster.local:5000
+  sentinelAddress: sentinel.jagw-dev-dominique.svc.cluster.local:5000
   sentinelMaster: mymaster
-  kafkaAddress: broker.jalapeno.svc.cluster.local:9092
+  kafkaAddress: kafka.jalapeno.svc.cluster.local:9092
   influxDBUrl: influxdb.jalapeno.svc.cluster.local:8086
   influxDBUser: root
   influxDBPassword: jalapeno
@@ -74,9 +74,11 @@ proxy:
   name: envoy-proxy
   replicas: 1
   image:
-    repository: envoyproxy/envoy-dev
+    #repository: envoyproxy/envoy-dev
+    repository: envoyproxy/envoy
     pullPolicy: Always
-    tag: f9d936ec65e42308f72b48e52ed5b810effc40e5
+    #tag: f9d936ec65e42308f72b48e52ed5b810effc40e5
+    tag: v1.20.7
   resources: []
   config:
     appServerAddress: 0.0.0.0
