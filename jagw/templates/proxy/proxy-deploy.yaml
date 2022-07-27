@@ -19,6 +19,9 @@ spec:
             name: {{ .Values.proxy.name }}-config
       containers:
         - image: "{{ .Values.proxy.image.repository }}:{{ .Values.proxy.image.tag }}"
+          env:
+          - name: ENVOY_UID
+            value: "0"
           volumeMounts:
           - name: config
             mountPath: "/etc/envoy/"
