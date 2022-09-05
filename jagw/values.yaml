@@ -6,7 +6,7 @@ release:
   subscriptionServiceTag: dev-30
 
 config:
-  arangoDB: jalapeno-arangodb.jalapeno.svc.cluster.local:8529
+  arangoDB: jalapeno-arangodb.jalapeno.svc.cluster.local:8086
   arangoDBUser: root
   arangoDBPassword: jalapeno
   arangoDBName: jalapeno
