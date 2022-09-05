@@ -9,3 +9,5 @@ data:
     SENTINEL_MASTER: {{ .Values.config.sentinelMaster }}
     KAFKA_ADDRESS: {{ .Values.config.kafkaAddress }}
     LOG_LEVEL: {{ .Values.cacheService.logLevel }}
+    # set to true to load non-jalapeno collection "ls_node_coordinates": -> needs to be created by hand
+    LOAD_FAKE_COORDINATES: "false"
