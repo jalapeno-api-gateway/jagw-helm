@@ -16,8 +16,8 @@ config:
   sentinelMaster: mymaster
   kafkaAddress: kafka.jalapeno.svc.cluster.local:9092
   influxDBUrl: influxdb.jalapeno.svc.cluster.local:8086
-  influxDBUser: root
-  influxDBPassword: jalapeno
+  influxDBUser: admin #root # needs to match influxUser in Jalapeno Deployment
+  influxDBPassword: gsplabgsplab # jalapeno # needs to match influxPassword in Jalapeno deployment
   influxDB: mdt_db
 
 subscriptionService:
