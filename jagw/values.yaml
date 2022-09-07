@@ -1,9 +1,9 @@
 imagePullSecrets: []
 
 release:
-  cacheServiceTag: dev-30
-  requestServiceTag: dev-30
-  subscriptionServiceTag: dev-30
+  cacheServiceTag: dev-40
+  requestServiceTag: dev-40
+  subscriptionServiceTag: dev-40
 
 config:
   arangoDB: jalapeno-arangodb.jalapeno.svc.cluster.local:8086
