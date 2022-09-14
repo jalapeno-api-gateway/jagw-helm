@@ -10,7 +10,7 @@ spec:
     port: 8080
     protocol: TCP
     targetPort: {{ .Values.requestService.config.appServerPort }}
-    nodePort: {{ .Values.requestService.nodePort }} 
+    # nodePort: {{ .Values.requestService.nodePort }} 
   selector:
     app: {{ .Values.requestService.name }}
-  type: NodePort
+  type: ClusterIP
