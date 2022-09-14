@@ -7,15 +7,14 @@ metadata:
 spec:
   ports:
   - name: {{ .Values.subscriptionService.name }}
-    port: {{ .Values.proxy.config.internalSubscriptionServicePort }}
+    port: {{ .Values.proxy.config.externalSubscriptionServicePort }}
     protocol: TCP
     targetPort: {{ .Values.proxy.config.internalSubscriptionServicePort }}
-    nodePort: {{ .Values.proxy.config.externalSubscriptionServicePort }} 
   - name: {{ .Values.requestService.name }}
-    port: {{ .Values.proxy.config.internalRequestServicePort }}
+    port: {{ .Values.proxy.config.externalRequestServicePort }}
     protocol: TCP
     targetPort: {{ .Values.proxy.config.internalRequestServicePort }}
-    nodePort: {{ .Values.proxy.config.externalRequestServicePort }} 
   selector:
     app: {{ .Values.proxy.name }}
-  type: NodePort
+  type: LoadBalancer
+  loadBalancerIP: "{{ .Values.proxy.config.loadBalancerIP }}"
