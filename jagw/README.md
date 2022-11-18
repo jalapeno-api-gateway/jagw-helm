@@ -7,5 +7,5 @@ Once deployed, the services can be accessed through the Envoy proxy on these por
 
 Service | Port
 --- | ---
-Request-Service | 30050
-Subscription-Service | 30051
+Request-Service | 9903
+Subscription-Service | 9902
