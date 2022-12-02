@@ -20,7 +20,7 @@ data:
                 "@type": type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.HttpConnectionManager
                 stat_prefix: ingress_http
                 codec_type: AUTO
-                stream_idle_timeout: 900s
+                stream_idle_timeout: 0s
                 route_config:
                   name: local_route
                   virtual_hosts:
@@ -54,7 +54,6 @@ data:
                 "@type": type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.HttpConnectionManager
                 stat_prefix: ingress_http
                 codec_type: AUTO
-                stream_idle_timeout: 900s
                 route_config:
                   name: local_route
                   virtual_hosts:
