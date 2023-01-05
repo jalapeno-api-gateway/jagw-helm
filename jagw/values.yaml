@@ -1,22 +1,23 @@
 imagePullSecrets: []
 
 release:
-  cacheServiceTag: v1.3.3
-  requestServiceTag: v1.3.3
-  subscriptionServiceTag: v1.3.3
+  cacheServiceTag: dev-43
+  requestServiceTag: dev-43
+  subscriptionServiceTag: dev-43
 
 config:
-  arangoDB: arangodb.jalapeno.svc.cluster.local:8529
+  arangoDB: jalapeno-arangodb.jalapeno.svc.cluster.local:8086
   arangoDBUser: root
   arangoDBPassword: jalapeno
   arangoDBName: jalapeno
   redisPassword: a-very-complex-password-here
-  sentinelAddress: sentinel.jagw.svc.cluster.local:5000
+  sentinelPassword: a-very-complex-password-here
+  sentinelAddress: jagw-redis.jagw-dev-dominique.svc.cluster.local:26379
   sentinelMaster: mymaster
-  kafkaAddress: broker.jalapeno.svc.cluster.local:9092
+  kafkaAddress: kafka.jalapeno.svc.cluster.local:9092
   influxDBUrl: influxdb.jalapeno.svc.cluster.local:8086
-  influxDBUser: root
-  influxDBPassword: jalapeno
+  influxDBUser: admin #root # needs to match influxUser in Jalapeno Deployment
+  influxDBPassword: gsplabgsplab # jalapeno # needs to match influxPassword in Jalapeno deployment
   influxDB: mdt_db
 
 subscriptionService:
@@ -26,7 +27,7 @@ subscriptionService:
     repository: insost/jagw-subscription-service
     pullPolicy: Always
   resources: []
-  nodePort: 30060
+  # nodePort: 30060
   config:
     appServerAddress: 0.0.0.0
     appServerPort: 9000
@@ -48,40 +49,42 @@ requestService:
     repository: insost/jagw-request-service
     pullPolicy: Always
   resources: []
-  nodePort: 30061
+  # nodePort: 30061
   config:
     appServerAddress: 0.0.0.0
     appServerPort: 9000
   logLevel: trace
 
-redis-cluster:
-  password: a-very-complex-password-here
-  mastername: mymaster
+
+# Official bitnami/stable charts
+# The charts are defined in the Charts.yaml as dependency
+# https://artifacthub.io/packages/helm/bitnami/redis
+redis:
+  global:
+    redis:
+      password: a-very-complex-password-here
+  
+  image:
+    registry: docker.io
+    repository: bitnami/redis
+    tag: 7.0.4-debian-11-r17
+
   sentinel:
-    name: sentinel
-    image: redis
-    tag: 6.0-alpine
-    port: 5000
-    storage: 5Gi
-  redis:
-    name: redis
-    image: redislabs/rejson
-    tag: latest
-    port: 6379
-    storage: 5Gi
+    enabled: true
 
 proxy:
   name: envoy-proxy
   replicas: 1
   image:
-    repository: envoyproxy/envoy-dev
+    repository: envoyproxy/envoy
     pullPolicy: Always
-    tag: latest
+    tag: v1.20.7
   resources: []
   config:
+    loadBalancerIP: "172.16.19.66"
     appServerAddress: 0.0.0.0
     appServerPort: 9901
     internalSubscriptionServicePort: 9902
-    externalSubscriptionServicePort: 30051
+    externalSubscriptionServicePort: 9902
     internalRequestServicePort: 9903
-    externalRequestServicePort: 30050
+    externalRequestServicePort: 9903

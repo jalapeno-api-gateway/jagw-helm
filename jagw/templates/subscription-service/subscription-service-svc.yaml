@@ -10,7 +10,7 @@ spec:
     port: 8080
     protocol: TCP
     targetPort: {{ .Values.subscriptionService.config.appServerPort }}
-    nodePort: {{ .Values.subscriptionService.nodePort }} 
+    # nodePort: {{ .Values.subscriptionService.nodePort }} 
   selector:
     app: {{ .Values.subscriptionService.name }}
-  type: NodePort
+  type: ClusterIP
