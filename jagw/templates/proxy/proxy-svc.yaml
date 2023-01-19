@@ -5,16 +5,24 @@ metadata:
     app: {{ .Values.proxy.name }}
   name: {{ .Values.proxy.name }}
 spec:
-  ports:
-  - name: {{ .Values.subscriptionService.name }}
-    port: {{ .Values.proxy.config.externalSubscriptionServicePort }}
-    protocol: TCP
-    targetPort: {{ .Values.proxy.config.internalSubscriptionServicePort }}
-  - name: {{ .Values.requestService.name }}
-    port: {{ .Values.proxy.config.externalRequestServicePort }}
-    protocol: TCP
-    targetPort: {{ .Values.proxy.config.internalRequestServicePort }}
   selector:
     app: {{ .Values.proxy.name }}
-  type: LoadBalancer
-  loadBalancerIP: "{{ .Values.proxy.config.loadBalancerIP }}"
+  type: {{ .Values.proxy.config.service.type }}
+  ports:
+  - name: {{ .Values.subscriptionService.name }}
+    port: {{ .Values.proxy.config.subscriptionServicePort }}
+    protocol: TCP
+    targetPort: {{ .Values.proxy.config.subscriptionServicePort }}
+    {{- if and .Values.proxy.config.service.nodePort.subscriptionServiceNodePort (eq .Values.proxy.config.service.type "NodePort") }}
+    nodePort: {{ .Values.proxy.config.service.nodePort.subscriptionServiceNodePort }}
+    {{- end }}
+  - name: {{ .Values.requestService.name }}
+    port: {{ .Values.proxy.config.requestServicePort }}
+    protocol: TCP
+    targetPort: {{ .Values.proxy.config.requestServicePort }}
+    {{- if and .Values.proxy.config.service.nodePort.requestServiceNodePort (eq .Values.proxy.config.service.type "NodePort") }}
+    nodePort: {{ .Values.proxy.config.service.nodePort.requestServiceNodePort}}
+    {{- end }}
+  {{- if and .Values.proxy.config.loadBalancerIP (eq .Values.proxy.config.service.type "LoadBalancer") }}
+  loadBalancerIP: "{{ .Values.proxy.config.service.loadBalancerIP }}"
+  {{- end }}
