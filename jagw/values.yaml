@@ -84,7 +84,7 @@ proxy:
     requestServicePort: 9903
     service:
       type: LoadBalancer
-      loadBalancerIP: "152.96.8.37"
+      loadBalancerIP: "152.96.8.37" # Omit for automatic IP assignment
       # nodePort: Optional (only if NodePort is used)
       # subscriptionServiceNodePort: 31146
       # requestServiceNodePort: 31147
