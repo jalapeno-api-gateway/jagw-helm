@@ -23,6 +23,6 @@ spec:
     {{- if and (eq .Values.proxy.config.service.type "NodePort") .Values.proxy.config.service.nodePort.requestServiceNodePort }}
     nodePort: {{ .Values.proxy.config.service.nodePort.requestServiceNodePort}}
     {{- end }}
-  {{- if and .Values.proxy.config.loadBalancerIP (eq .Values.proxy.config.service.type "LoadBalancer") }}
+  {{- if and (eq .Values.proxy.config.service.type "LoadBalancer") .Values.proxy.config.service.loadBalancerIP }}
   loadBalancerIP: "{{ .Values.proxy.config.service.loadBalancerIP }}"
   {{- end }}
