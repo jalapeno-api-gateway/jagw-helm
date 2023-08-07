@@ -29,9 +29,9 @@ spec:
           ports:
           - containerPort: {{ .Values.proxy.config.appServerPort }}
             protocol: TCP
-          - containerPort: {{ .Values.proxy.config.internalRequestServicePort }}
+          - containerPort: {{ .Values.proxy.config.internalRequestServicePort | default .Values.proxy.config.requestServicePort }}
             protocol: TCP
-          - containerPort: {{ .Values.proxy.config.internalSubscriptionServicePort }}
+          - containerPort: {{ .Values.proxy.config.internalSubscriptionServicePort | default .Values.proxy.config.subscriptionServicePort }}
             protocol: TCP
           {{- if .Values.imagePullSecrets }}
           imagePullPolicy: "{{ .Values.imagePullSecrets }}"

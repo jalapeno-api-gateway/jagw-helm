@@ -13,14 +13,14 @@ spec:
     port: {{ .Values.proxy.config.subscriptionServicePort }}
     protocol: TCP
     targetPort: {{ .Values.proxy.config.subscriptionServicePort }}
-    {{- if and .Values.proxy.config.service.nodePort.subscriptionServiceNodePort (eq .Values.proxy.config.service.type "NodePort") }}
+    {{- if and (eq .Values.proxy.config.service.type "NodePort") .Values.proxy.config.service.nodePort.subscriptionServiceNodePort }}
     nodePort: {{ .Values.proxy.config.service.nodePort.subscriptionServiceNodePort }}
     {{- end }}
   - name: {{ .Values.requestService.name }}
     port: {{ .Values.proxy.config.requestServicePort }}
     protocol: TCP
     targetPort: {{ .Values.proxy.config.requestServicePort }}
-    {{- if and .Values.proxy.config.service.nodePort.requestServiceNodePort (eq .Values.proxy.config.service.type "NodePort") }}
+    {{- if and (eq .Values.proxy.config.service.type "NodePort") .Values.proxy.config.service.nodePort.requestServiceNodePort }}
     nodePort: {{ .Values.proxy.config.service.nodePort.requestServiceNodePort}}
     {{- end }}
   {{- if and .Values.proxy.config.loadBalancerIP (eq .Values.proxy.config.service.type "LoadBalancer") }}

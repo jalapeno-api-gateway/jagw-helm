@@ -1,9 +1,9 @@
 imagePullSecrets: []
 
 release:
-  cacheServiceTag: dev-43
-  requestServiceTag: dev-43
-  subscriptionServiceTag: dev-43
+  cacheServiceTag: v1.3.2
+  requestServiceTag: v1.3.2
+  subscriptionServiceTag: v1.3.2
 
 config:
   arangoDB: jalapeno-arangodb.jalapeno.svc.cluster.local:8086
@@ -12,7 +12,7 @@ config:
   arangoDBName: jalapeno
   redisPassword: a-very-complex-password-here
   sentinelPassword: a-very-complex-password-here
-  sentinelAddress: jagw-redis.jagw-dev-dominique.svc.cluster.local:26379
+  sentinelAddress: jagw-redis.jagw-dev.svc.cluster.local:26379
   sentinelMaster: mymaster
   kafkaAddress: kafka.jalapeno.svc.cluster.local:9092
   influxDBUrl: influxdb.jalapeno.svc.cluster.local:8086
@@ -24,10 +24,9 @@ subscriptionService:
   name: subscription-service
   replicas: 1
   image:
-    repository: insost/jagw-subscription-service
+    repository: ghcr.io/jalapeno-api-gateway/subscription-service
     pullPolicy: Always
   resources: []
-  # nodePort: 30060
   config:
     appServerAddress: 0.0.0.0
     appServerPort: 9000
@@ -37,7 +36,7 @@ cacheService:
   name: cache-service
   replicas: 1
   image:
-    repository: insost/jagw-cache-service
+    repository: ghcr.io/jalapeno-api-gateway/cache-service
     pullPolicy: Always
   resources: []
   logLevel: trace
@@ -46,14 +45,29 @@ requestService:
   name: request-service
   replicas: 1
   image:
-    repository: insost/jagw-request-service
+    repository: ghcr.io/jalapeno-api-gateway/request-service
     pullPolicy: Always
   resources: []
-  # nodePort: 30061
   config:
     appServerAddress: 0.0.0.0
     appServerPort: 9000
   logLevel: trace
+
+# Official bitnami/stable charts
+# The charts are defined in the Charts.yaml as dependency
+# https://artifacthub.io/packages/helm/bitnami/redis
+redis:
+  global:
+    redis:
+      password: a-very-complex-password-here
+
+  image:
+    registry: docker.io
+    repository: bitnami/redis
+    tag: 7.0.4-debian-11-r17
+
+  sentinel:
+    enabled: true
 
 proxy:
   name: envoy-proxy
@@ -70,21 +84,7 @@ proxy:
     requestServicePort: 9903
     service:
       type: LoadBalancer
-      loadBalancerIP: "172.16.19.71"
-      nodePort:
-        subscriptionServiceNodePort: 31146
-        requestServiceNodePort: 31147
-
-# Official bitnami/stable charts
-# The charts are defined in the Charts.yaml as dependency
-# https://artifacthub.io/packages/helm/bitnami/redis
-redis:
-  global:
-    redis:
-      password: a-very-complex-password-here
-  image:
-    registry: docker.io
-    repository: bitnami/redis
-    tag: 7.0.4-debian-11-r17
-  sentinel:
-    enabled: true
+      loadBalancerIP: "152.96.8.37"
+      # nodePort: Optional (only if NodePort is used)
+      # subscriptionServiceNodePort: 31146
+      # requestServiceNodePort: 31147
