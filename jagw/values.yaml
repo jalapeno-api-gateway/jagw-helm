@@ -5,14 +5,15 @@ release:
   requestServiceTag: v1.4.0
   subscriptionServiceTag: v1.4.0
 
+# Change to your own needs
 config:
-  arangoDB: jalapeno-arangodb.jalapeno.svc.cluster.local:8086
+  arangoDB: jalapeno-arangodb.jalapeno.svc.cluster.local:8086 
   arangoDBUser: root
   arangoDBPassword: jalapeno
   arangoDBName: jalapeno
   redisPassword: a-very-complex-password-here
   sentinelPassword: a-very-complex-password-here
-  sentinelAddress: jagw-redis.jagw-dev.svc.cluster.local:26379
+  sentinelAddress: jagw-redis.jagw-dev.svc.cluster.local:26379  
   sentinelMaster: mymaster
   kafkaAddress: kafka.jalapeno.svc.cluster.local:9092
   influxDBUrl: influxdb.jalapeno.svc.cluster.local:8086
@@ -63,7 +64,7 @@ redis:
 
   image:
     registry: docker.io
-    repository: bitnami/redis
+    repository: bitnamilegacy/redis
     tag: 7.0.4-debian-11-r17
 
   sentinel:
