@@ -69,6 +69,10 @@ redis:
 
   sentinel:
     enabled: true
+    image:
+      registry: docker.io
+      repository: bitnamilegacy/redis-sentinel
+      tag: 7.0.4-debian-11-r17
 
 proxy:
   name: envoy-proxy
